@@ -19,8 +19,10 @@
 
 int main ( int argc, char *argv[] )
 {
+   
     AVLTree Tree = NULL;
     Position Pos = NULL;
+    AVLTree tp = NULL;
     
     Tree = Insert(5, Tree);
     Tree = Insert(2, Tree);
@@ -28,15 +30,21 @@ int main ( int argc, char *argv[] )
     Tree = Insert(1, Tree);
     Tree = Insert(3, Tree);
     Tree = Insert(6, Tree);
-    Tree = Insert(4, Tree);
+   Tree = Insert(4, Tree);
+#if 0
     InOrder(Tree);
-    printf("/n");
+    printf("\n");
 #ifndef DELET2
     Tree = Delete(3,Tree);
 #else
     Tree = Delete2(3, Tree);
 #endif
+#endif
 
+    InOrder(Tree);
+    Tree = Delete(8, Tree);
+    printf("\n---------\n");
+    InOrder(Tree);
     return 0;
 }	/* ----------  end of function main  ---------- */
 
