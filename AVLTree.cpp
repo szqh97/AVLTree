@@ -146,7 +146,8 @@ AVLTree Insert(ElementType X, AVLTree T)
 {
     if (NULL == T)
     {
-	T = (AVLTree)malloc(sizeof(AVLTree));
+	//T = (AVLTree)malloc(sizeof(AVLTree));
+	T = (AVLTree)malloc(sizeof(AVLNode));
 	T->Left = T->Right = NULL;
 	T->Height = 0;
 	T->Val = X;
@@ -177,6 +178,40 @@ AVLTree Insert(ElementType X, AVLTree T)
     return T;
 }
 
+AVLTree Delete(ElementType X, AVLTree T)
+{
+    Position temp;
+    if (T == NULL)
+	return NULL;
+    else if (X < T->Val)
+	T->Left = Delete(X, T->Left);
+    else if (X > T->Val)
+	T->Right = Delete(X, T->Right);
+    else if (T->Left && T->Right)
+    {
+	T->Right = DeleteRightMin(T, T->Right);
+    }
+    else
+    {
+	temp = T;
+	if (T->Left == NULL)
+	    T = T->Right;
+	else if (T->Right == NULL)
+	    T = T->Left;
+	free(temp);
+    }
+    if (T != NULL)
+    {
+	T->Height = max(Height(T->Left), Height(T->Right)) + 1;
+	if (T->Left != NULL)
+	    T->Left = Rotate(T->Left);
+	if (T->Right != NULL)
+	    T->Right = Rotate(T->Right);
+	T = Rotate(T);
+    }
+    return T;
+
+}
 AVLTree Delete2(ElementType X, AVLTree T)
 {
     Position Temp;
